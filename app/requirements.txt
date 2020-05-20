@@ -1,0 +1,6 @@
+Django
+psycopg2-binary
+beautifulsoup4
+python-xbrl
+lxml
+Jinja2

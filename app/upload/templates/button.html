@@ -1,0 +1,9 @@
+<form action="" method="POST">
+	{% csrf_token %}
+	{{ form }}
+	<input value="Do" type="submit">
+</form>
+
+{% if URL %}
+<h1> w4nkers {{ URL }}</h1>
+{% endif %}
