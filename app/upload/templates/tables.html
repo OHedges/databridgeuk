@@ -1,0 +1,15 @@
+<table style='font-size:10px;'>
+	<tr>
+		{% for title in titles %}
+		<th>{{ title }}</th>
+		{% endfor %}
+	</tr>
+	{% for row in table %}
+	<tr>
+		{% for item in row %}
+		<td>{{ item }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
