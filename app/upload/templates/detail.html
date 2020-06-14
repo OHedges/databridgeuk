@@ -1,0 +1,32 @@
+{% load upload_extras %}
+{% load static %}
+
+<link rel='stylesheet' type='text/css' href="{% static 'upload/style.css' %}">
+
+<table id='detail'>
+	<tr>
+		<th>Company Information</th>
+		<th></th>
+	</tr>
+	{% for field in info %}
+	<tr>
+		{% for item in field %}
+		<td>{{ item }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>
+
+<table id='detail'>
+	<tr>
+		<th>Company Accounts</th>
+		<th></th>
+	</tr>
+	{% for field in data %}
+	<tr>
+		{% for item in field %}
+		<td>{{ item }}</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+</table>

@@ -1,6 +1,7 @@
 Django
-psycopg2-binary
+psycopg2
 beautifulsoup4
 python-xbrl
 lxml
-Jinja2
+progress
+django-tables2

@@ -1,15 +1,24 @@
-<table style='font-size:10px;'>
+{% load upload_extras %}
+{% load static %}
+
+<link rel='stylesheet' type='text/css' href="{% static 'upload/style.css' %}">
+
+<table id='main'>
 	<tr>
 		{% for title in titles %}
-		<th>{{ title }}</th>
+		<th><a href='?order_by={{ title }}'>{{ title }}</a></th>
 		{% endfor %}
 	</tr>
 	{% for row in table %}
 	<tr>
-		{% for item in row %}
-		<td>{{ item }}</td>
+		<td><a href='../detail/{{ row.1 }}'>{{ row.0 }}</a></td>
+		{% for item in row|slice:'1:' %}
+			{% if item|is_num %}
+				<td class='num'>{{ item }}</td>
+			{% else %}
+				<td>{{ item }}</td>
+			{% endif %}
 		{% endfor %}
 	</tr>
 	{% endfor %}
 </table>
-

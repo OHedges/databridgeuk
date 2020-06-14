@@ -22,8 +22,10 @@ def get_accounts(url):
     m.download()
     m.unzip()
     file_list = m.list_files()
-    objs = []
+    total = len(file_list)
+    count = 0
     for file_name in file_list:
+        count += 1
         scrape = DataScraper('/usr/src/app/upload/temp/' + file_name)
         if scrape.is_dormant():
             continue
@@ -31,8 +33,17 @@ def get_accounts(url):
             output = scrape.get_id() + scrape.get_num(wanted)
         except Exception as e:
             print((e, file_name))
+            continue
         a = Accounts()
-        a.companynumber = Company.objects.get(companynumber=output[0])
+        a.accountsdate = scrape.get_date()
+        a.filename = file_name
+        # use setattr()
+        # change this to a.companynumber = scrape.get_id()
+        try:
+            a.companynumber = Company.objects.get(pk=output[0])
+        except Exception as e:
+            print((e,output[0]))
+            continue
         a.equity = num_or_none(output[1])
         a.creditors = num_or_none(output[2])
         a.propertyplantequipment = num_or_none(output[3])
@@ -418,6 +429,11 @@ def get_accounts(url):
         a.deferredtaxexpensecreditfromunrecognisedtaxlossorcredit = num_or_none(output[383])
         a.valueaddedtaxpayable = num_or_none(output[384])
         a.recoverablevalueaddedtax = num_or_none(output[385])
-        a.filename  = file_name
-        a.save()
+        try:
+            a.save()
+        except Exception as e:
+            print(e)
+            continue
+        sys.stdout.write('Progress {}%   \r'.format((count/total)*100))
+        sys.stdout.flush()
     m.delete()

@@ -1,5 +1,21 @@
 from django.db import models
 
+class Category(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.title
+
+
+class SicCode(models.Model):
+    code = models.IntegerField(primary_key=True)
+    description = models.CharField(max_length=255)
+    category = models.ManyToManyField(Category, blank=True)
+
+    def __str__(self):
+        return str(self.code)
+
 
 class Company(models.Model):
     companyname = models.CharField(max_length=255)
@@ -28,10 +44,7 @@ class Company(models.Model):
     mortgages_nummortoutstanding = models.IntegerField(blank=True, null=True)
     mortgages_nummortpartsatisfied = models.IntegerField(blank=True, null=True)
     mortgages_nummortsatisfied = models.IntegerField(blank=True, null=True)
-    siccode_sictext_1 = models.CharField(max_length=255)
-    siccode_sictext_2 = models.CharField(max_length=255)
-    siccode_sictext_3 = models.CharField(max_length=255)
-    siccode_sictext_4 = models.CharField(max_length=255)
+    siccodes = models.ManyToManyField(SicCode, blank=True)
     limitedpartnerships_numgenpartners = models.IntegerField(blank=True, null=True)
     limitedpartnerships_numlimpartners = models.IntegerField(blank=True, null=True)
     url = models.CharField(max_length=255)
@@ -450,4 +463,8 @@ class Accounts(models.Model):
     valueaddedtaxpayable = models.IntegerField(null=True, blank=True)
     recoverablevalueaddedtax = models.IntegerField(null=True, blank=True)
     filename = models.CharField(max_length=255, primary_key=True)
+    accountsdate = models.DateField()
     lastmodified = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.companynumber.companyname
